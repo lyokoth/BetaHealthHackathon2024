@@ -1,55 +1,106 @@
-import {View, Text, Image, TextInput, TouchableOpacity, Button } from 'react-native';
-import React from 'react';
+import React, {Component, useState, useEffect} from 'react';
+import { View, Text, Image, TextInput, TouchableOpacity, Button, StyleSheet  } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import { StatusBar } from 'expo-status-bar';
 import { useNavigation } from '@react-navigation/native';
+import { CheckBox } from 'react-native-elements';   
 
 
-
-export default function Login() {
-    const navigation = useNavigation();
-
-    
-    return (
-        <View className="white h-full w-full">
-            <StatusBar style="light" />
-            <Image className="fixed w-[143px] h-[115px] top-0 left-0" source={require('../assets/Ellipse 1.png')} />
-
-            <View className= "h-[60] w-[60] top-0">
-            <Button title="Back" onPress={() => navigation.navigate("WelcomeScreen")}></Button>
-            </View>
-            <View className="absolute w-[160px] h-[23px] top-[126px] left-[127px] [font-family:'Inter-Regular',Helvetica] font-normal text-black text-[15.7px] text-center tracking-[-0.28px] leading-[normal]">
-          <Text>Sign into your account</Text>
-        </View>
-        <View className="absolute h-[19px] top-[203px] left-[37px] [font-family:'Inter-Regular',Helvetica] font-normal text-black text-[15.7px] text-center tracking-[-0.28px] leading-[normal]">
-        <Text>E-mail:</Text>
-        </View>
-        <View className="absolute w-[300px] h-[57px] top-[248px] left-[37px] bg-black/5 rounded-2xl">
-        <TextInput placeholder="Email" placeholderTextColor={'gray'} />
-            </View> 
-            <View className="absolute h-[19px] top-[328px] left-[37px] [font-family:'Inter-Regular',Helvetica] font-normal text-black text-[15.7px] text-center tracking-[-0.28px] leading-[normal]">
-        <Text>Password:</Text>
-        </View>
-        <View className="absolute w-[300px] h-[57px] top-[373px] left-[37px] bg-black/5 rounded-2xl">
-        <TextInput placeholder="Password" placeholderTextColor={'gray'} />
-            </View> 
-           
-            <View className="absolute w-[300px] h-[57px] top-[500px] left-[37px] bg-black/5 rounded-2xl">
-            <TouchableOpacity color="text-white" className="bg-[#8fafff] w-[300px] h-[57px] rounded-2xl flex justify-center items-center" onPress={() => navigation.navigate('Home')}>
-                <Text>Sign In</Text>
-            </TouchableOpacity>
-            </View>
-            
-            <View className="absolute h-[19px] top-[600px] left-[37px] [font-family:'Inter-Regular',Helvetica] font-normal text-black text-[15.7px] text-center tracking-[-0.28px] leading-[normal]">
-        <Text>Don't have an account?
-          <TouchableOpacity>
-            <Text className="text-sky-100">Sign Up</Text>
-        </TouchableOpacity>
-        
-        </Text>
-        </View>
-            
-          
-        </View>
+export default class Login extends Component {
+    constructor(props) {
+      super(props);
+      this.state = {
+        email: '',
+        password: '',
+        showPassword: false,
+        rememberMe: false,
+      };
+    }
   
-    )
-}
+    buttonClick = () => {
+      this.props.navigation.navigate('Home', {name: 
+    this.state.firstName});
+    };
+  
+    InsertRecord = () => {
+      const { email, password } = this.state;
+  
+      if (email.trim() === '' || password.trim() === '') {
+        alert('Please fill in all fields.');
+        return;
+      }
+      
+      // Continue with login process
+      this.props.navigation.navigate('Home');
+    ;
+  
+        // Send data to server
+         
+    };
+  
+    render() {
+      return (
+        <SafeAreaView style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+          <StatusBar style="auto" />
+          <View>
+            <Image source={require('../assets/Standard Collection 10.png')} style={{ width: 200, height: 200 }} />
+            <Text style={{ fontSize: 30, fontWeight: 'bold', color: 'black' }}>Login</Text>
+            <TextInput
+              style={styles.input}
+              placeholder="Email"
+              onChangeText={(email) => this.setState({ email })}
+              value={this.state.email}
+            />
+            <TextInput
+              style={styles.input}
+              placeholder="Password"
+              secureTextEntry={!this.state.showPassword}
+              onChangeText={(password) => this.setState({ password })}
+              value={this.state.password}
+            />
+            <TouchableOpacity onPress={() => this.setState({ showPassword: !this.state.showPassword })}>
+              <Text className='bold text-sky-100'>{this.state.showPassword ? 'Hide' : 'Show'} Password</Text>
+            </TouchableOpacity>
+            <View style={styles.checkboxContainer}>
+              <CheckBox
+                value={this.state.rememberMe}
+                onValueChange={() => this.setState({ rememberMe: !this.state.rememberMe })}
+                style={styles.checkbox}
+              />
+              <Text style={styles.label}>Remember Me</Text>
+            </View>
+            <TouchableOpacity className="w-full bg-sky-100 p-3 rounded-2xl">
+            <Button title="Login" onPress={this.InsertRecord} />
+            </TouchableOpacity>
+      
+            <TouchableOpacity onPress={this.buttonClick}>
+              <Text>Don't have an account? Sign Up</Text>
+            </TouchableOpacity>
+          </View>
+        </SafeAreaView>
+      );
+    }
+  }
+  
+  const styles = StyleSheet.create({
+    input: {
+      height: 40,
+      borderColor: 'gray',
+      borderWidth: 1,
+      width: 200,
+      marginVertical: 10,
+      paddingHorizontal: 10,
+      borderRadius: 5,
+    },
+    checkboxContainer: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      marginBottom: 10,
+    },
+    checkbox: {
+      alignSelf: 'center',
+    },
+    label: {
+      margin: 8,
+    },
+  });

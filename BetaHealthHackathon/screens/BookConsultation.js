@@ -21,7 +21,7 @@ export default function BookConsultation() {
        </View>
        <View className="flex items-center mx-4 space-y-4" style={{marginTop: 110}}>
     <TouchableOpacity className="w-full bg-gray-200 p-3 rounded-2xl">
-    <Button title = "Me" onPress={() => navigation.navigate("BookConsultation")}/>
+    <Button title = "Me" onPress={() => navigation.navigate("MyAppointment")}/>
     </TouchableOpacity>
     <TouchableOpacity className="w-full bg-gray-200 p-3 rounded-2xl">
     <Button title = "My Child" onPress={() => navigation.navigate("BookTherapy")}/>

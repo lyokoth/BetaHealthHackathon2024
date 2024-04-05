@@ -3,6 +3,7 @@ import React from 'react'
 import { StatusBar } from 'expo-status-bar';
 import { useNavigation } from '@react-navigation/native';
 
+
 export default function WelcomeScreen() {
     const navigation = useNavigation();
 
@@ -15,10 +16,15 @@ export default function WelcomeScreen() {
             RuralCare
         </Text>
         </View>
+        <View>
+
+        </View>
+
 
         <View className="flex items-center">
             <Image className="h-[150] w-[150] top-20" source={require('../assets/Standard Collection 10.png')} />
             </View>
+         
 
             <View className="flex items-center mx-4 space-y-4" style={{marginTop: 110}}>
                 <Text className="text-black font-bold tracking-wider text-2xl">
@@ -39,7 +45,8 @@ export default function WelcomeScreen() {
                             <View className="flex-row justify-center" style={{marginTop: 155}}>
                                 <Text>Don't have an account?</Text>
                                 <TouchableOpacity>
-                                    <Text className="text-sky-100">Sign Up</Text>
+                                    <Text className="text-sky-100"
+                                    onPress={() => navigation.navigate("SignUp")}>Sign Up</Text>
                                     </TouchableOpacity>
                     </View>
                     </View>      
